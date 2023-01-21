@@ -178,4 +178,48 @@ npm install express --> to download the framework and add to the nodeJS package.
 
 
 ⁡⁣⁣⁢ExpressJS Server Html File⁡:
-      
+      To display html from file directly, we import the path module and use the res.sendFile() method instead of the res.send() method which displays normal text/html texts.
+
+      --> import the path module of node:
+            const path = require('path)
+      --> use the path.join() method to get an absolute path. eg;
+            router.get('/', (req, res) => {
+              res.sendFile(path.join(__dirname, '../root/home.html'))
+            })
+
+
+⁡⁣⁣⁢Pug Template Engine:⁡
+      ⁡⁢⁣⁣A template engine⁡ enables you to use static template files in your application. At runtime, the template engine replaces variables in a template file with actual values, and transforms the template into an HTML file sent to the client. This approach makes it easier to design an HTML page.
+      Some popular template engines that work with Express are Pug, Mustache, and EJS. The Express application generator uses Jade as its default, but it also supports several others.
+
+      --> install pug -> npm install pug --save
+      --> define/set the view engine -> app.set('view engine', 'pug')
+      --> Create a view folder, then a .pug file inside it, with the following content:
+            html
+              head
+                title= "your title"
+              body
+                h1= "your message"
+      --> Then create a route to render the index.pug file
+      router.get('/', (req, res) => {
+      res.render("index", {name: "Dking Alabi"})
+      })
+
+
+      ⁡⁣⁣⁡⁢⁣⁣Note: To use get, post, patch, delete to access MongoDB:⁡⁡
+          we can join all related routes together:
+
+          bookRouter
+          .route('/book/:id')
+          .get((req, res) => { ⁡⁢⁣⁣// getting all the books⁡
+            console.log(req.params)
+            res.send(`<h1>single book of ID: ${req.params.id}</h1>`)
+          })
+          .patch((req, res) => { ⁡⁢⁣⁣// update  books⁡
+            console.log(req.params)
+            res.send(`<h1>single book of ID: ${req.params.id} to update</h1>`)
+          })
+          .delete((req, res) => { ⁡⁢⁣⁣// delete a book⁡
+            console.log(req.params)
+            res.send(`<h1>single book of ID: ${req.params.id} to delete</h1>`)
+          })
