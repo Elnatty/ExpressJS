@@ -96,5 +96,86 @@ npm install express --> to download the framework and add to the nodeJS package.
 
 
 
-Dynamic Routing:
+⁡⁣⁣⁢Dynamic Routing:⁡
+      // dynamic routes
+      app.get('/book', (req, res) => {
+        res.send("All Books")
+      })
+
+      // getting user input i.e; http://localhost:3000/book/30
+      app.get('/book/:id', (req, res) => {
+        // the .params is located inside the (req), so we use console.log(req.param) to view the id value.
+        console.log(req.params)
+        // display on screen
+        res.send(`<h1>single book of ID: ${req.params.id}</h1>`)
+      })
+
+
+      ⁡⁣⁣⁢Chaining Multiple Routes together;⁡
+            // chaining .get and .post routes together
+            // .route("/book") ==> signifies root folder
+            // .get() ==> since its still working in same folder
+            app
+              .route("/book")
+              .get((req, res) => {
+              res.send("All Books")
+            })
+              .post((req, res) => {
+              res.json({data:"books are stored"})
+            })
+
+
+      ⁡⁣⁣⁢Putting all routes in a separate .js file:⁡
+          // import the express function
+          const express = require('express')
+          // import the router function
+          const router = express.Router()
+
+          ⁡⁢⁣⁣// use the router object to create your routes. eg: ⁡⁢⁣⁣router.get(), router.post(), etc..⁡
+          router.get('/', (req, res) => {
+          res.send('<h1>Hello World!</h1>')
+          // pass the data you want to be returned after the event.
+          myEmitter.emit('event', {name: 'Dking'})
+          })
+
+          router
+          .route("/book")
+          .get((req, res) => {
+          res.send("All Books")
+          })
+          .post((req, res) => {
+          res.json({data:"books are stored"})
+          })
+
+          ⁡⁢⁣⁣// then export the router function.⁡
+          module.exports = router
+
+          ⁡⁢⁣⁣// next is to import it into your main file;⁡
+          const routes = require('path')
+          // import expressJS
+          const express = require('express')
+          const app = express()
+          const port = 3000
+
+          ⁡⁢⁣⁣// use the .use() method to access the routes.⁡
+          app.use(routes)
+
+          
+          app.listen(port, () => {
+          console.log(`server listening on http://localhost:${port}`)
+          })
+          
+
+          ⁡⁢⁣⁣In summary:⁡
+              --> when u have 3 .js files, ie; p1, p2, p3.. 
+
+              --> so p3 might be where you all your routes are; so you import express and router. Then specify ur routes with router.route().get().post() etc.. then export.
+
+              --> so p2 imports p3, express and router, then you might have some routes also for maybe root directory of the webpage. then you export.
+
+              --> p1 is main.js => u import express, an object instance of express and p2. then app.use() and listen for port connection.
+
+
+
+⁡⁣⁣⁢ExpressJS Server Html File⁡:
       
